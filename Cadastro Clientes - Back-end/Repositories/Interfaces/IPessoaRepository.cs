@@ -9,5 +9,7 @@ namespace Cadastro_Clientes___Back_end.Repositories.Interfaces
         Task<PessoaModel> CreatePeople(PessoaModel pessoa);
         Task<PessoaModel> UpdatePeople(PessoaModel pessoa, int id);
         Task<bool> DeletePeople(int id);
+
+        Task<bool> isCpfExists(string cpf);
     }
 }

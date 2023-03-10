@@ -25,17 +25,17 @@ namespace Cadastro_Clientes___Back_end.Repositories
         }
         public async Task<PessoaModel> CreatePeople(PessoaModel pessoa)
         {
-             await _dbContext.Pessoas.AddAsync(pessoa);
-              await _dbContext.SaveChangesAsync();
+            await _dbContext.Pessoas.AddAsync(pessoa);
+            await _dbContext.SaveChangesAsync();
 
-            return  pessoa;
+            return pessoa;
         }
 
         public async Task<PessoaModel> UpdatePeople(PessoaModel pessoa, int id)
         {
             PessoaModel pessoaId = await GetPeopleById(id);
 
-            if(pessoaId == null)
+            if (pessoaId == null)
             {
                 throw new Exception($"Usuario para o ID: {id} não foi encontrado no banco de dados.");
             }
@@ -52,7 +52,7 @@ namespace Cadastro_Clientes___Back_end.Repositories
             pessoaId.Logradouro = pessoa.Logradouro;
 
             _dbContext.Pessoas.Update(pessoaId);
-           await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return pessoaId;
         }
@@ -70,10 +70,29 @@ namespace Cadastro_Clientes___Back_end.Repositories
             _dbContext.Pessoas.Remove(pessoaId);
             await _dbContext.SaveChangesAsync();
             return true;
-          
+
         }
 
+        public async Task<bool> isCpfExists(string cpf)
+        {
 
-       
+            PessoaModel pessoaId = await GetPeopleByCpf(cpf);
+
+            if (pessoaId == null)
+            {
+                return false;
+
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+        public async Task<PessoaModel> GetPeopleByCpf(string cpf)
+        {
+            return await _dbContext.Pessoas.FirstOrDefaultAsync(x => x.Cpf == cpf);
+        }
     }
 }

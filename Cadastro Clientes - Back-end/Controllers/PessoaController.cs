@@ -57,5 +57,13 @@ namespace Cadastro_Clientes___Back_end.Controllers
         }
 
 
+
+        [HttpGet("cpf/{cpf}")]
+        public async Task<ActionResult<PessoaModel>> isCpfExists(string cpf)
+        {
+            bool isCpf = await _pessoaRepository.isCpfExists(cpf);
+            return Ok(isCpf);
+        }
+
     }
 }
